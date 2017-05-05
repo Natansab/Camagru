@@ -1,48 +1,26 @@
 <?php
-$servername = "localhost";
-$username = "username";
-$password = "password";
-$dbname = "camagru_db";
 
+require_once('./database.php');
 
-// require_once('./ft_tools.php');
+$dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 
-$conn = mysqli_connect($servername, $username, $password);
+// Create dbbase if note exist
+$sql = "CREATE DATABASE IF NOT EXISTS camagru_db";
+$dbh->exec( $sql );
 
-echo "<br  />";
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-echo "Connected successfully";
-echo "<br  />";
-
-$sql = "CREATE DATABASE IF NOT EXISTS $dbname";
-echo "<br  />";
-if (mysqli_query($conn, $sql)) {
-    echo "Database created successfully";
-} else {
-    echo "Error creating database: " . mysqli_error($conn);
-}
-echo "<br  />";
-
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-// Check connection
-echo "<br  />";
-
-// User Table
+// Create User Table
 $sql = "CREATE TABLE IF NOT EXISTS Users (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
 login VARCHAR(250) NOT NULL,
 password VARCHAR(250) NOT NULL
 )";
+$dbh->exec( $sql );
 
-echo "<br  />";
-if (mysqli_query($conn, $sql)) {
-    echo "Table Users created successfully";
-} else {
-    echo "Error creating table: " . mysqli_error($conn);
-}
-echo "<br  />";
+// Create First fake user
+$sql = "INSERT INTO USERS (login, password) VALUES ('login3', 'password3')";
+$dbh->exec( $sql );
 
-mysqli_close($conn);
+// to end connection
+$dbh = null;
+
 ?>
