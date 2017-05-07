@@ -4,6 +4,8 @@ session_start();
 $login =  $_POST["login"];
 $passorwd = hash("whirlpool", $_POST["passwd"]);
 
+// echo $_SERVER['DOCUMENT_ROOT'] . "Camagru/login";
+
 $auth_return = auth($login, $passorwd);
 if ($auth_return == 0) {
 	echo "Wrong Login/Password<br />";

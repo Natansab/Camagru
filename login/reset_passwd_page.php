@@ -4,8 +4,9 @@
 		<link rel="stylesheet" type="text/css" href="../index.css"/>
 	</head>
 	<body>
+		<?php include('../menu.php') ?>
 		<div id='wrapper'>
-		<h1>Reset Password</h1>
+		<h2>Reset Password</h2>
 		<form action ="reset_passwd.php" method="POST">
 			<label for="password">New Password: </lavel><input type="password" name="password" id="password" value=""/><br />
 			<input type="hidden" name="email" value="<?php echo htmlspecialchars($_GET['email']) ?>"/><br />

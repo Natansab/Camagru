@@ -2,7 +2,7 @@
 
 require_once('./database.php');
 
-$dbh = new PDO('mysql:host=localhost;dbname=camagru_db', $DB_USER, $DB_PASSWORD);
+$dbh = new PDO('mysql:host=localhost', $DB_USER, $DB_PASSWORD);
 // Create dbbase if note exist
 $sql = "CREATE DATABASE IF NOT EXISTS camagru_db";
 $dbh->exec( $sql );

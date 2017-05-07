@@ -9,8 +9,8 @@ $login = $_SESSION['loggued_on_user'];
 		<link rel="stylesheet" type="text/css" href="../index.css"/>
 	</head>
 	<body>
+		<?php include('../menu.php') ?>
 		<div id='wrapper'>
-				<?php include('../menu.php') ?>
 				<h2>Log In</h2>
 		<form action ="login_pdo.php" method="POST">
 			<label for="login">Login: </label><input type="text" name="login" id="login" value =""/>
@@ -21,8 +21,8 @@ $login = $_SESSION['loggued_on_user'];
 		</form>
 		<br  />
 		<br  />
-		<a href="./create_pdo.html">Sign up</a><br />
-		<a href="./reset_passwd_request.html">Forgot your password?</a><br />
+		<a href="./create_pdo.php">Sign up</a><br />
+		<a href="./reset_passwd_request.php">Forgot your password?</a><br />
 	</div>
 	</body>
 </html>
