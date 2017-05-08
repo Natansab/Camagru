@@ -70,6 +70,7 @@
 
     startbutton.addEventListener('click', function(ev){
       takepicture();
+      uploadpicture();
       ev.preventDefault();
     }, false);
 
@@ -101,13 +102,31 @@
       ctx = canvas.getContext('2d')
       ctx.drawImage(video, 0, 0, width, height);
       var data = canvas.toDataURL('image/png');
+      // console.log(data);
       photo.setAttribute('src', data);
     } else {
       clearphoto();
     }
   }
-
   // Set up our event listener to run the startup process
   // once loading is complete.
   window.addEventListener('load', startup, false);
+
+
+  // Upload image to sever
+	function uploadpicture() {
+		var dataUrl = canvas.toDataURL();
+		$.ajax({
+			type: "POST",
+			url: "camsave.php",
+			data: {
+				imgBase64: dataUrl
+			}
+			}).done(function(msg) {
+			console.log('saved');
+		});
+	};
+
+
+
 })();

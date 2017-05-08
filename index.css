@@ -1,15 +1,30 @@
+#wrapper, #wrapper_webcam, #main, #side {
+	margin: 10px;
+}
+
 #wrapper {
 	width: 1000px;
 	margin: 0 auto;
+	display: flex;
 }
 
 #wrapper_webcam {
-	margin: 0 auto;
+	/*margin: 0 auto;*/
 	width: 340px;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	border: solid;
+}
+
+#main {
+	border: solid black;
+	width: 800px;
+}
+
+#side {
+	border: solid black;
+	width: 200px;
 }
 
 #video {
