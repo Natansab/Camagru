@@ -19,11 +19,15 @@
   var photo = null;
   var startbutton = null;
 
+  var prez_name = null;
+
   function startup() {
     video = document.getElementById('video');
     canvas = document.getElementById('canvas');
     photo = document.getElementById('photo');
+    // Possibilite de submit sans selection au prealable...
     startbutton = document.getElementById('startbutton');
+    // startbutton = document.getElementsByName('startbutton')[0];
 
     navigator.getMedia = ( navigator.getUserMedia ||
                            navigator.webkitGetUserMedia ||
@@ -69,6 +73,7 @@
     }, false);
 
     startbutton.addEventListener('click', function(ev){
+      // console.log (document.getElementById("startbutton").value);
       takepicture();
       uploadpicture();
       ev.preventDefault();
@@ -102,8 +107,7 @@
       ctx = canvas.getContext('2d')
       ctx.drawImage(video, 0, 0, width, height);
       var data = canvas.toDataURL('image/png');
-      // console.log(data);
-      photo.setAttribute('src', data);
+      // photo.setAttribute('src', data);
     } else {
       clearphoto();
     }
@@ -115,16 +119,27 @@
 
   // Upload image to sever
 	function uploadpicture() {
+
+    var radios = document.getElementsByName('prez');
+    for (var i = 0, length = radios.length; i < length; i++) {
+      if (radios[i].checked)
+        prez_name = radios[i].value;
+    }
 		var dataUrl = canvas.toDataURL();
 		$.ajax({
 			type: "POST",
 			url: "camsave.php",
 			data: {
-				imgBase64: dataUrl
+				imgBase64: dataUrl,
+        prez: prez_name,
 			}
 			}).done(function(msg) {
 			console.log('saved');
+      var d = new Date();
+      var n = d.getSeconds();
+      photo.setAttribute('src', 'http://localhost:8080/Camagru/src/img/go4profilpic1.png?' + n);
 		});
+
 	};
 
 

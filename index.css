@@ -65,7 +65,7 @@ li a {
 	background-color: #4CAF50;
 }
 
-#video, .output {
+#video {
 	transform: scaleX(-1);
 }
 
