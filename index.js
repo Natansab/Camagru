@@ -1,3 +1,8 @@
+// Onclick call function carousel page
+function carousel_page(page_num) {
+  $("#img_carousel").load("http://localhost:8080/Camagru/side_section.php?page_num=" + page_num);
+}
+
 (function() {
   // The width and height of the captured photo. We will set the
   // width to the value defined here, but the height will be

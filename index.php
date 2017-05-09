@@ -30,9 +30,6 @@ session_start();
 					</div>
 					<canvas id="canvas">
 					</canvas>
-					<!-- <div class="output">
-						<img id="photo" alt="The screen capture will appear in this box.">
-					</div> -->
 				</div>
 			</div>
 			<div id='side'>

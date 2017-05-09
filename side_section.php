@@ -20,13 +20,23 @@ foreach ($dbh->query($sql) as $row)
 
 if (empty($images_name))
   return ;
+
+$num_of_img = count($images_name);
 ?>
 
 <!-- Section w/ all the photos -->
 <ul>
   <?php
-  // var_dump($images_name);
-    for ($i = 0; $i < 3; $i++)
+    for ($i = $page_num * 3 - 3; $i < $page_num * 3 && $i < $num_of_img; $i++)
       echo "<li><img src='http://localhost:8080/Camagru/src/img/usr/" . $images_name[$i] . ".png'/></li><br>";
   ?>
 </ul>
+<table>
+  <tr>
+    <?php
+      for ($i = 1; $i <= ($num_of_img + $num_of_img % 3) / 3; $i++)
+      echo "<td><a onclick='carousel_page($i)' href='#'>" . $i . "</a></td>"
+        // echo "<td><a onclick='carousel_page($i)' href='./side_section.php?page_num='" . $i . ">" . $i . "</a></td>"
+      ?>
+  </tr>
+</table>
