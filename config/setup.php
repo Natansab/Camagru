@@ -28,5 +28,12 @@ display INT(1) DEFAULT 1
 )";
 $dbh->exec( $sql );
 
+$sql = "CREATE TABLE IF NOT EXISTS Likes (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+img_name VARCHAR(250) NOT NULL,
+user_login VARCHAR(250) NOT NULL
+)";
+$dbh->exec( $sql );
+
 $dbh = null;
 ?>
