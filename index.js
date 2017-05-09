@@ -19,8 +19,6 @@
   var photo = null;
   var startbutton = null;
 
-  var prez_name = null;
-
   function startup() {
     video = document.getElementById('video');
     canvas = document.getElementById('canvas');
@@ -76,21 +74,9 @@
       // console.log (document.getElementById("startbutton").value);
       takepicture();
       uploadpicture();
+      refresh_carousel();
       ev.preventDefault();
     }, false);
-
-    clearphoto();
-  }
-
-  // Fill the photo with an indication that none has been
-  // captured.
-
-  function clearphoto() {
-    var context = canvas.getContext('2d');
-    context.fillStyle = "#AAA";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    var data = canvas.toDataURL('image/png');
-    photo.setAttribute('src', data);
   }
 
   // Capture a photo by fetching the current contents of the video
@@ -107,25 +93,46 @@
       ctx = canvas.getContext('2d')
       ctx.drawImage(video, 0, 0, width, height);
       var data = canvas.toDataURL('image/png');
-      // photo.setAttribute('src', data);
-    } else {
-      clearphoto();
     }
   }
+
   // Set up our event listener to run the startup process
   // once loading is complete.
   window.addEventListener('load', startup, false);
 
-
-  // Upload image to sever
-	function uploadpicture() {
-
+  function prez_selected() {
     var radios = document.getElementsByName('prez');
     for (var i = 0, length = radios.length; i < length; i++) {
       if (radios[i].checked)
-        prez_name = radios[i].value;
+        return(radios[i].value);
     }
+  }
+
+
+// Upload image to sever
+	function uploadpicture() {
+
+    var prez_name = prez_selected();
+
+    // Base64 image
 		var dataUrl = canvas.toDataURL();
+
+    // Ajax + js method NOT WORKING
+    // var http = new XMLHttpRequest();
+    // var url = "camsave.php";
+    // var params = "imgBase64=" + dataUrl + "&prez=" + prez_name;
+    // console.log(params);
+    // http.open("POST", url, true);
+    //Send the proper header information along with the request
+    // http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    // http.onreadystatechange = function() {//Call a function when the state changes.
+    //     if(http.readyState == 4 && http.status == 200) {
+    //         alert(http.responseText);
+    //     }
+    // }
+    // http.send(params);
+
+    // Ajax + jQuery method
 		$.ajax({
 			type: "POST",
 			url: "camsave.php",
@@ -137,11 +144,11 @@
 			console.log('saved');
       var d = new Date();
       var n = d.getSeconds();
-      photo.setAttribute('src', 'http://localhost:8080/Camagru/src/img/go4profilpic1.png?' + n);
 		});
-
 	};
 
-
-
+  // Ajax method refresh
+  function refresh_carousel() {
+    $("#img_carousel").load("http://localhost:8080/Camagru/side_section.php");
+  }
 })();

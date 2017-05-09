@@ -19,12 +19,12 @@
 
 #main {
 	border: solid black;
-	width: 800px;
+	width: 600px;
 }
 
 #side {
 	border: solid black;
-	width: 200px;
+	width: 500px;
 }
 
 #video {
@@ -36,6 +36,9 @@
 }
 
 ul {
+	list-style-type: none;
+}
+#header ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -43,11 +46,11 @@ ul {
     background-color: #333;
 }
 
-li {
+#header li {
     float: left;
 }
 
-li a {
+#header li a {
     display: block;
     color: white;
     text-align: center;
@@ -55,7 +58,7 @@ li a {
     text-decoration: none;
 }
 
-.welcome {
+#header .welcome {
     display: block;
     color: white;
     text-align: center;

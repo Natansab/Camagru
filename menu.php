@@ -1,4 +1,5 @@
-<ul>
+<div id="header">
+	<ul>
 	<li><a href="http://localhost:8080/Camagru/index.php">Home</a></li>
 <?php if (($login = $_SESSION["loggued_on_user"])) {
 
@@ -9,3 +10,4 @@ else
 	echo '<li><a href="http://localhost:8080/Camagru/login/login_index_pdo.php">Log In</a></li>';
 ?>
 </ul>
+</div>
