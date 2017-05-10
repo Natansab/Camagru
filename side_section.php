@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require_once "./config/database.php";
 echo "login dans side = " . $_SESSION['loggued_on_user'];
@@ -40,14 +41,20 @@ $num_of_img = count($images_name);
 <ul>
   <?php
     for ($i = $page_num * 3 - 3; $i < $page_num * 3 && $i < $num_of_img; $i++) {
+// Code for image
       echo "<li>
-              <img src='http://localhost:8080/Camagru/src/img/usr/" . $images_name[$i] . ".png'/><br>
+              <img id=" . $images_name[$i] . " src='http://localhost:8080/Camagru/src/img/usr/" . $images_name[$i] . ".png'/><br>
               <div id='like_image_" . $images_name[$i] . "' onclick='like_image(\"" . $images_name[$i] . "\")'>
                 Like (" . ($images_likes[$images_name[$i]]) . ")
               </div>
-              Comments";
-              // Error with session
-              // include("./comments.php");
+              Comments"; ?>
+              <div class="comments">
+                <form action="./comments.php" method="post" id="post_comment">
+                  <input type="text" name="comment_text" value="" required><br>
+                  <input type="submit" value="Comment">
+                </form>
+              </div>"
+              <?php
     echo "</li><br>";
     }
   ?>

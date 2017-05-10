@@ -1,19 +1,19 @@
 <?php
 require_once "./config/database.php";
 
-echo "login dans comment = " . $_SESSION['loggued_on_user'];
-
-// Login information
-// session_start();
-// if (!isset($_SESSION['loggued_on_user']))
-//   return ;
+echo "<br />login dans comment = " . $_SESSION['loggued_on_user'];
 
 $login = $_SESSION['loggued_on_user'];
-$comment_text = $_POST['comment_text']
+
+// Check if there was some comments before
+
+// Get the comment that was sent
+$comment_text = $_POST['comment_text'];
+
 ?>
-<div class="camera">
+<div class="comments">
   <form action="./comments.php" method="post" id="post_comment">
     <input type="text" name="comment_text" value="" required><br>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Comment">
   </form>
 </div>

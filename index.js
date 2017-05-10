@@ -48,7 +48,6 @@ function like_image(img_name) {
     photo = document.getElementById('photo');
     // Possibilite de submit sans selection au prealable...
     startbutton = document.getElementById('startbutton');
-    // startbutton = document.getElementsByName('startbutton')[0];
 
     navigator.getMedia = ( navigator.getUserMedia ||
                            navigator.webkitGetUserMedia ||
@@ -94,10 +93,13 @@ function like_image(img_name) {
     }, false);
 
     startbutton.addEventListener('click', function(ev){
-      // console.log (document.getElementById("startbutton").value);
+      // Check if nothing selected
+      if (document.forms["form1"]["prez"].value == "")
+        alert ("Please select a filter 💩");
+      // If filter selected, do...
+      else {
       takepicture();
-      uploadpicture();
-      refresh_carousel();
+      uploadpicture();}
       ev.preventDefault();
     }, false);
   }
@@ -164,17 +166,40 @@ function like_image(img_name) {
         prez: prez_name,
 			}
 			}).done(function(msg) {
-			console.log('saved');
-      var d = new Date();
-      var n = d.getSeconds();
+			// console.log('saved');
+      // Once callback, refresh carousel on the right
+      refresh_carousel();
 		});
+    return (1);
 	};
 
   // Ajax method refresh
   function refresh_carousel() {
-    $("#img_carousel").load("http://localhost:8080/Camagru/side_section.php");
+
+  // JS method to refresh div with carousel
+
+    // img carousel is inside side
+    var side = document.getElementById('side');
+
+    // Prepare remove old div
+    var old_elem = document.getElementById('img_carousel');
+
+    // Prepare new div
+     var new_elem = document.createElement('div');
+     new_elem.id = 'img_carousel';
+
+     // Remove & add
+     old_elem.parentNode.removeChild(old_elem);
+     side.appendChild(new_elem);
+
+     var xhr = new XMLHttpRequest();
+
+     xhr.onload = function () {
+         document.getElementById('img_carousel').innerHTML = this.response;
+     };
+
+     xhr.open('GET', 'http://localhost:8080/Camagru/side_section.php', true);
+     xhr.send();
+     console.log('ok');
   }
-
-
-
 })();
