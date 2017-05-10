@@ -35,5 +35,14 @@ user_login VARCHAR(250) NOT NULL
 )";
 $dbh->exec( $sql );
 
+$sql = "CREATE TABLE IF NOT EXISTS Comments (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+img_name VARCHAR(250) NOT NULL,
+user_login VARCHAR(250) NOT NULL,
+comment_text VARCHAR(250) NOT NULL,
+date_post DATE
+)";
+$dbh->exec( $sql );
+
 $dbh = null;
 ?>

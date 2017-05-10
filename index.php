@@ -11,7 +11,10 @@ session_start();
 <body>
 	<?php include('./menu.php') ?>
 	<div id='wrapper'>
-		<?php if(isset($_SESSION['loggued_on_user'])) {?>
+		<?php if(isset($_SESSION['loggued_on_user']) && $_SESSION['loggued_on_user'] != "")
+		{
+			echo "login dans main = " . $_SESSION['loggued_on_user'];
+		?>
 			<div id='main'>
 				<h3>Main Section</h3>
 				<div id='wrapper_webcam'>

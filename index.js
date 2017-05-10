@@ -3,6 +3,24 @@ function carousel_page(page_num) {
   $("#img_carousel").load("http://localhost:8080/Camagru/side_section.php?page_num=" + page_num);
 }
 
+// Onclick call function carousel page
+function like_image(img_name) {
+  var http = new XMLHttpRequest();
+  var url = "like_image.php";
+  var params = "img_name=" + img_name;
+  // console.log(params);
+  http.open("POST", url, true);
+  // Send the proper header information along with the request
+  http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  http.onreadystatechange = function() {//Call a function when the state changes.
+      if(http.readyState == 4 && http.status == 200) {
+        document.getElementById("like_image_" + img_name).innerHTML = http.responseText;
+      }
+  }
+  http.send(params);
+  // console.log('ok' + img_name);
+}
+
 (function() {
   // The width and height of the captured photo. We will set the
   // width to the value defined here, but the height will be
@@ -160,39 +178,3 @@ function carousel_page(page_num) {
 
 
 })();
-
-// console.log(document.getElementById('natan_4dd33'));
-document.getElementById('natan_4dd33').onclick=function() {
-  var http = new XMLHttpRequest();
-  var url = "like_image.php";
-  var params = "img_name=natan_4dd33";
-  // console.log(params);
-  http.open("POST", url, true);
-  // Send the proper header information along with the request
-  http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  http.onreadystatechange = function() {//Call a function when the state changes.
-      if(http.readyState == 4 && http.status == 200) {
-          alert(http.responseText);
-      }
-  }
-  http.send(params);
-}
-//
-
-// Onclick call function carousel page
-function like_image(img_name) {
-  // Ajax + js method NOT WORKING
-  var http = new XMLHttpRequest();
-  var url = "like_image.php";
-  var params = "img_name=" + img_name;
-  // console.log(params);
-  http.open("POST", url, true);
-  // Send the proper header information along with the request
-  http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  http.onreadystatechange = function() {//Call a function when the state changes.
-      if(http.readyState == 4 && http.status == 200) {
-          alert(http.responseText);
-      }
-  }
-  http.send(params);
-}
