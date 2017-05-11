@@ -8,6 +8,10 @@
 	display: flex;
 }
 
+.img_side {
+	width: 320px;
+}
+
 #wrapper_webcam {
 	/*margin: 0 auto;*/
 	width: 340px;
@@ -19,7 +23,7 @@
 
 #main {
 	border: solid black;
-	width: 600px;
+	width: 800px;
 }
 
 #side {

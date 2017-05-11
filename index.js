@@ -1,6 +1,34 @@
 // Onclick call function carousel page
+
+// function refresh_div_with_url(parentDiv, old_elem, new_elem,)
 function carousel_page(page_num) {
-  $("#img_carousel").load("http://localhost:8080/Camagru/side_section.php?page_num=" + page_num);
+
+  // JS method to refresh div with carousel
+    // img carousel is inside side
+    var side = document.getElementById('side');
+
+    // Prepare remove old div
+    var old_elem = document.getElementById('img_carousel');
+
+    // Prepare new div
+     var new_elem = document.createElement('div');
+     new_elem.id = 'img_carousel';
+
+     // Remove & add
+     old_elem.parentNode.removeChild(old_elem);
+     side.appendChild(new_elem);
+
+     var xhr = new XMLHttpRequest();
+
+     xhr.onload = function () {
+         document.getElementById('img_carousel').innerHTML = this.response;
+     };
+
+     xhr.open('GET', 'http://localhost:8080/Camagru/side_section.php?page_num=' + page_num, true);
+     xhr.send();
+     console.log('ok');
+
+
 }
 
 // Onclick call function carousel page
@@ -26,7 +54,7 @@ function like_image(img_name) {
   // width to the value defined here, but the height will be
   // calculated based on the aspect ratio of the input stream.
 
-  var width = 320;    // We will scale the photo width to this
+  var width = 600;    // We will scale the photo width to this
   var height = 0;     // This will be computed based on the input stream
 
   // |streaming| indicates whether or not we're currently streaming
@@ -104,6 +132,11 @@ function like_image(img_name) {
     }, false);
   }
 
+  document.getElementById('made_selection').addEventListener('click', function(){
+    document.getElementById("startbutton").removeAttribute("disabled");
+  })
+
+
   // Capture a photo by fetching the current contents of the video
   // and drawing it into a canvas, then converting that to a PNG
   // format data URL. By drawing it on an offscreen canvas and then
@@ -143,41 +176,28 @@ function like_image(img_name) {
 		var dataUrl = canvas.toDataURL();
 
     // Ajax + js method NOT WORKING
-    // var http = new XMLHttpRequest();
-    // var url = "camsave.php";
-    // var params = "imgBase64=" + dataUrl + "&prez=" + prez_name;
-    // console.log(params);
-    // http.open("POST", url, true);
-    //Send the proper header information along with the request
-    // http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    // http.onreadystatechange = function() {//Call a function when the state changes.
-    //     if(http.readyState == 4 && http.status == 200) {
-    //         alert(http.responseText);
-    //     }
-    // }
-    // http.send(params);
+    var http = new XMLHttpRequest();
+    var url = "camsave.php";
+    var params = "imgBase64=" + JSON.stringify({image: dataUrl}) + "&prez=" + prez_name;
+    console.log(params);
+    http.open("POST", url, true);
+    // Send the proper header information along with the request
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.onreadystatechange = function() {//Call a function when the state changes.
+        if(http.readyState == 4 && http.status == 200) {
+          //   // Once callback, refresh carousel on the right
+            refresh_carousel();
 
-    // Ajax + jQuery method
-		$.ajax({
-			type: "POST",
-			url: "camsave.php",
-			data: {
-				imgBase64: dataUrl,
-        prez: prez_name,
-			}
-			}).done(function(msg) {
-			// console.log('saved');
-      // Once callback, refresh carousel on the right
-      refresh_carousel();
-		});
-    return (1);
+            // alert(http.responseText);
+        }
+    }
+    http.send(params);
 	};
 
   // Ajax method refresh
   function refresh_carousel() {
 
   // JS method to refresh div with carousel
-
     // img carousel is inside side
     var side = document.getElementById('side');
 

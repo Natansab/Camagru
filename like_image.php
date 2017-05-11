@@ -37,7 +37,7 @@ $sth = $dbh->prepare($sql);
 $sth->execute(array(':user_login' => $login, ':img_name' => $img_name));
 }
 
-// Getting like for this image
+// Getting nb of likes for this image
 $sql = "SELECT COUNT(Likes.img_name) AS 'nb_of_likes' FROM Likes
         WHERE `img_name` = :img_name";
 $sth = $dbh->prepare($sql);

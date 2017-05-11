@@ -13,15 +13,19 @@ $img_name = $login . "_" . substr(hash("whirlpool", rand(0, 10000)), 1, 5);
 // var_dump ($img_name);
 
 // Create artwork
-$rawData = $_POST['imgBase64'];
+$rawData = json_decode($_POST['imgBase64'])->image;
+$filteredData = str_replace('data:image/png;base64,', '', $rawData);
+$filteredData = str_replace(' ', '+', $filteredData);
+$unencoded = base64_decode($filteredData);
+
 $prez_name = $_POST['prez'];
-$filteredData = explode(',', $rawData);
-$unencoded = base64_decode($filteredData[1]);
 
 //Create the image
-$fp = fopen('./src/img/usr/' . $img_name . '.png', 'w');
-fwrite($fp, $unencoded);
-fclose($fp);
+// $fp = fopen('./src/img/usr/' . $img_name . '.png', 'w');
+// fwrite($fp, $unencoded);
+// fclose($fp);
+
+file_put_contents('./src/img/usr/' . $img_name . '.png', $unencoded);
 
 $im1 = imagecreatefrompng("./src/img/usr/$img_name.png");
 imageflip($im1, IMG_FLIP_HORIZONTAL);
