@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-
 require_once "./config/database.php";
 
 $login = $_SESSION['loggued_on_user'];
@@ -17,12 +16,10 @@ $sql = "UPDATE Photos
 $sth = $dbh->prepare($sql);
 $sth->execute(array(':display' => 0, 'img_name' => $img_name));
 
-// Debugging
+// // Debugging
 // echo "\nPDOStatement::errorInfo():\n";
 // $arr = $sth->errorInfo();
 // print_r($arr);
-
-// Check if there was some comments before
 
 header('Location: ./index.php');
 ?>

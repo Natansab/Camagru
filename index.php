@@ -1,12 +1,10 @@
 <?php
 session_start();
-// echo $_SESSION["img_uploaded"];
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="./index.css"/>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="./index.js" async></script>
 </head>
 <body>
@@ -31,13 +29,12 @@ session_start();
 						</span>
 							<input type="submit" form="form1" value="Submit" name="startbutton" id="startbutton" disabled="disabled">
 						</form>
-						<video id="video" width="320px" height="240px">Video stream not available.</video>
+						<video id="video" width="600px" height="450px">Video stream not available.</video>
 						<br/>
 					</div>
-					<form method="post" enctype="multipart/form-data" id="form2" action="#">
+					<form method="post" enctype="multipart/form-data" id="form2" action="./upload.php">
 					    Select image to upload:
-					    <input type="file" name="fileToUpload" id="fileToUpload">
-					    <input type="submit" value="Upload Image" id="file2Upload" name="submit">
+					    <input type="file" accept="image/*" name="fileToUpload" id="fileToUpload" disabled="disabled">
 					</form>
 					<canvas id="canvas">
 					</canvas>

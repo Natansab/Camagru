@@ -73,6 +73,14 @@ function like_image(img_name) {
   // console.log('ok' + img_name);
 }
 
+function prez_selected() {
+  var radios = document.getElementsByName('prez');
+  for (var i = 0, length = radios.length; i < length; i++) {
+    if (radios[i].checked)
+    return(radios[i].value);
+  }
+}
+
 (function() {
 
   var width = 600;    // We will scale the photo width to this
@@ -149,6 +157,8 @@ function like_image(img_name) {
       // If filter selectedm enable click on button
       document.getElementById('made_selection').addEventListener('click', function(){
         document.getElementById("startbutton").removeAttribute("disabled");
+        document.getElementById("fileToUpload").removeAttribute("disabled");
+
       })
 
       function takepicture() {
@@ -164,14 +174,6 @@ function like_image(img_name) {
 
       window.addEventListener('load', startup, false);
 
-      function prez_selected() {
-        var radios = document.getElementsByName('prez');
-        for (var i = 0, length = radios.length; i < length; i++) {
-          if (radios[i].checked)
-          return(radios[i].value);
-        }
-      }
-
       // Upload image to sever
       function uploadpicture() {
 
@@ -180,7 +182,7 @@ function like_image(img_name) {
 
         // Ajax + js method
         var http = new XMLHttpRequest();
-        var url = "camsave.php";
+        var url = "create_from_cam.php";
         var params = "imgBase64=" + JSON.stringify({image: dataUrl}) + "&prez=" + prez_name;
         console.log(params);
         http.open("POST", url, true);
@@ -193,131 +195,33 @@ function like_image(img_name) {
         }
         http.send(params);
       }
-      //
-      // var input = document.getElementsByTagName('input')['fileToUpload'];
-      //
-      // input.onclick = function() {
-      //   this.value = null;
-      // }
-      // input.onchange = function() {
-      //
-      //
-      //   // alert (this.value);
-      //
-      //   var prez_name = prez_selected();
-      //
-      //   // Ajax + js method
-      //   var http = new XMLHttpRequest();
-      //   var url = "upload.php";
-      //   // var params = "img_path=" + this.value + "&prez=" + prez_name;
-      //   // console.log(this.value);
-      //   http.open("POST", url, true);
-      //   // Send the proper header information along with the request
-      //   http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      //   http.onreadystatechange = function() {//Call a function when the state changes.
-      //     if(http.readyState == 4 && http.status == 200) {
-      //       alert(this.response);
-      //       carousel_refresh_page();
-      //     }
-      //   }
-      //   var form2 = document.getElementById("form2");
-      //   console.log(form2);
-      //   var formData = new FormData(form2);
-      //   formData.append("prez", "melenchou");
-      //   console.log(formData);
-      //   // formData.append("prez", prez_name);
-      //   // console.log(formData);
-      //   http.send(formData);
-      //   // http.send(params);
-      // }
-
-    // function create_artwork_from_upload() {
-
-    // var prez_name = prez_selected();
-
-
-    // var file2Upload = document.getElementById("file2Upload");
-    // file2Upload.addEventListener('click', function(ev){
-    //   // // Check if nothing selected
-    //   // if (document.forms["form1"]["prez"].value == "")
-    //   //   alert ("Please select a filter 💩");
-    //   // // If filter selected, do...
-    //   // else {
-    //   // create_artwork_from_upload();
-    //   // alert("ok on est la");
-    //   // takepicture();
-    //   // uploadpicture();}
-    //   ev.preventDefault();
-    // }, false);
-
-
-
 })();
 
+var input = document.getElementsByTagName('input')['fileToUpload'];
 
+input.onclick = function() {
+  this.value = null;
+}
+input.onchange = function(ev) {
 
-///////////////// ERROR UPLOAD FILE WITH AJAX ///////////////////////
+  var input = document.querySelector('input[type=file]');
+  file = input.files[0];
 
+  var formData = new FormData();
+  formData.append("fileToUpload", file);
+  formData.append("prez", prez_selected());
 
-var upbut = document.getElementById("file2Upload");
-upbut.addEventListener('click', function(ev){
-  // alert("yo");
-  // Check if nothing selected
-  // if (document.forms["form1"]["prez"].value == "")
-  // alert ("Please select a filter 💩");
-  // If filter selected, do...
-    // takepicture();
-    // uploadpicture();
-    //
-
-    // Ajax + js method
-
-
-    // var form = document.getElementById("form2");
-    // var formData = new FormData(form);
-    //
-    // var http = new XMLHttpRequest();
-    // var url = "upload.php";
-    // // var params = "img_path=" + this.value + "&prez=" + prez_name;
-    // // console.log(this.value);
-    // http.open("POST", url, true);
-    // // Send the proper header information along with the request
-    // http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    // http.onreadystatechange = function() {//Call a function when the state changes.
-    //   if(http.readyState == 4 && http.status == 200) {
-    //     console.log(this.response);
-    //     // alert("ok?");
-    //     // carousel_refresh_page();
-    //   }
-    // }
-    // formData.append("prez", "melenchou");
-    // http.send(formData);
-    //
-    // // alert("hello");
-
-
-    var input = document.querySelector('input[type=file]');
-    file = input.files[0];
-    //
-    var formData = new FormData();
-    formData.append("file", file);
-    formData.append("prez", "melenchou");
-
-    alert("wtf");
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "./upload.php");
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    alert("wtf1");
-    xhr.onreadystatechange = function() {//Call a function when the state changes.
-      alert("wtf2");
-      if(xhr.readyState == 4 && xhr.status == 200) {
-        alert(this.response);
-        // alert("ok?");
-        // carousel_refresh_page();
-      }
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "./create_from_upload.php");
+  ////////////// NO HEADER ////////////
+  xhr.onreadystatechange = function() {
+    if(xhr.readyState == 4 && xhr.status == 200) {
+      console.log(xhr.response);
+      if (xhr.response != "")
+        alert(xhr.response);
+      carousel_refresh_page();
     }
-    ev.preventDefault();
-  }, false);
-
-  ///////////////// ERROR UPLOAD FILE WITH AJAX ///////////////////////
+  }
+  xhr.send(formData);
+  ev.preventDefault();
+}

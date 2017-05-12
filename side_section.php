@@ -38,11 +38,6 @@ $sql = "SELECT * FROM Comments";
 foreach ($dbh->query($sql) as $row)
 $images_comments[] = array($row['img_name'], $row['comment_text'], $row['user_login']);
 
-// print_r($images_comments);
-
-
-// var_dump($images_likes);
-
 if (empty($images_name))
 return ;
 

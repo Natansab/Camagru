@@ -10,7 +10,6 @@ $login = $_SESSION['loggued_on_user'];
 
 // Chose image name
 $img_name = $login . "_" . substr(hash("whirlpool", rand(0, 10000)), 1, 5);
-// var_dump ($img_name);
 
 // Create artwork
 $rawData = json_decode($_POST['imgBase64'])->image;
@@ -37,10 +36,10 @@ $sql = "INSERT INTO Photos (user_login, img_name) VALUES (:user_login, :photo_pa
 $sth = $dbh->prepare($sql);
 $sth->execute(array(':user_login' => $login, ':photo_path' => $img_name));
 
-// Debugging
+// // Debugging
 // echo "\nPDOStatement::errorInfo():\n";
 // $arr = $sth->errorInfo();
 // print_r($arr);
-
-// $dbh = null;
+//
+$dbh = null;
 ?>
