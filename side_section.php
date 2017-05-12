@@ -54,7 +54,7 @@ $num_of_img = count($images_name);
     <?php
     if ($num_of_img > 3)
     for ($i = 1; $i <= ($num_of_img + 3 - $num_of_img % 3) / 3; $i++)
-    echo "<td><a onclick='carousel_page($i)' href='#'>" . $i . "</a></td>";
+    echo "<td><a onclick='carousel_select_page($i)' href='#'>" . $i . "</a></td>";
     ?>
   </tr>
 </table>
