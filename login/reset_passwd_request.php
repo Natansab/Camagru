@@ -6,8 +6,8 @@
 	<body>
 		<?php include('../menu.php') ?>
 		<div id='wrapper'>
-		<h1>Reset you password</h1>
-		<form action ="_reset_passwd_request.php" method="POST">
+		<h1>Reset you password</h1><br />
+		<form action ="_reset_passwd_request.php" method="POST" class="middle">
 			<label for="email">E-mail: </label><input type="email" name="email" id="email" value =""/><br />
 			<input type="submit" name="submit" value="Reset Password"/>
 		</form>

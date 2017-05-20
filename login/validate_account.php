@@ -6,7 +6,13 @@ $login = $_GET['login'];
 $key = $_GET['key'];
 
 $sql = 'SELECT COUNT(*) FROM Users WHERE login = :login AND confirmation_key = :key;';
-$dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+try {
+    $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+    return ;
+}
 $sth = $dbh->prepare($sql);
 $sth->execute(array(':login' => $login, ':key' => $key));
 if (strcmp($sth->fetchColumn(),'0')) {

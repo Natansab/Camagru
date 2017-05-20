@@ -6,8 +6,8 @@
 	<body>
 		<?php include('../menu.php') ?>
 		<div id='wrapper'>
-		<h2>Create Account</h2>
-		<form action ="_create_pdo.php" method="POST">
+		<h2>Create Account</h2><br />
+		<form action ="_create_pdo.php" method="POST" class="middle">
 			<label for="login">Login: </label><input type="text" name="login" id="login" value =""/><br />
 			<label for="email">E-mail: </label><input type="email" name="email" id="email" value =""/><br />
 			<label for="passwd">Password: </lavel><input type="password" name="passwd" id="passwd" value=""/><br />

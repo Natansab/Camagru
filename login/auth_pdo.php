@@ -5,7 +5,13 @@ function auth($login, $password) {
 	require_once "../config/database.php";
 
 	$sql = 'SELECT COUNT(*) FROM Users WHERE login = :login AND password = :password;';
-	$dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+	try {
+	    $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+	    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	} catch (PDOException $e) {
+	    echo 'Connection failed: ' . $e->getMessage();
+	    return ;
+	}
 	$sth = $dbh->prepare($sql);
 	$sth->execute(array(':login' => $login, ':password' => $password));
 
@@ -13,7 +19,13 @@ function auth($login, $password) {
 			return (0);
 
 	$sql = 'SELECT COUNT(*) FROM Users WHERE login = :login AND active = 1;';
-	$dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+	try {
+	    $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+	    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	} catch (PDOException $e) {
+	    echo 'Connection failed: ' . $e->getMessage();
+	    return ;
+	}
 	$sth = $dbh->prepare($sql);
 	$sth->execute(array(':login' => $login));
 

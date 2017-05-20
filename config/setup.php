@@ -8,7 +8,13 @@ $sql = "CREATE DATABASE IF NOT EXISTS camagru_db";
 $dbh->exec( $sql );
 $dbh = null;
 
-$dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+try {
+    $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+    return ;
+}
 // Create User Table
 $sql = "CREATE TABLE IF NOT EXISTS Users (
 id_users INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,

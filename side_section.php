@@ -12,7 +12,13 @@ if (isset($_GET['page_num']))
 $page_num = $_GET['page_num'];
 
 // Connection to database
-$dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+try {
+    $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+    return ;
+}
 
 // Getting all the images
 $sql = "SELECT `img_name`, `user_login` FROM Photos

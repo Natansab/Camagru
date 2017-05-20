@@ -19,19 +19,27 @@ $unencoded = base64_decode($filteredData);
 
 $prez_name = $_POST['prez'];
 
+var_dump($prez_name);
 //Create the image
 file_put_contents('./src/img/usr/' . $img_name . '.png', $unencoded);
 
 $im1 = imagecreatefrompng("./src/img/usr/$img_name.png");
 imageflip($im1, IMG_FLIP_HORIZONTAL);
 $im2 = imagecreatefrompng("./src/img/vote_" . $prez_name . ".png");
-imagecopy($im1, $im2, 0, 0, 0, 0, 320, 240);
+imagecopy($im1, $im2, 0, 0, 0, 0, 600, 450);
 imagepng($im1, "./src/img/usr/$img_name.png");
 imagedestroy($im1);
 imagedestroy($im2);
 
 // Adding the photo path in the photos table
-$dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+
+try {
+    $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+    return ;
+}
 $sql = "INSERT INTO Photos (user_login, img_name) VALUES (:user_login, :photo_path);";
 $sth = $dbh->prepare($sql);
 $sth->execute(array(':user_login' => $login, ':photo_path' => $img_name));

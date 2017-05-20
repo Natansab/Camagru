@@ -16,29 +16,31 @@ session_start();
 		?>
 			<div id='main'>
 				<h3>Main Section</h3>
-				<div id='wrapper_webcam'>
-					<div class="camera">
 						<form action="./index.php" method="post" id="form1">
 							<span id="made_selection">
-							<label for="1">MARINE
-							<input type="radio" name="prez" value="lepen" id="1" required></label><br>
-							<label for="2">MELENCHON
-							<input type="radio" name="prez" value="melenchon" id="2" required></label><br>
-							<label for="3">MACRON
-							<input type="radio" name="prez" value="macron" id="3" required></label><br>
-						</span>
-							<input type="submit" form="form1" value="Submit" name="startbutton" id="startbutton" disabled="disabled">
+								<label for="1"><img src="./src/filter/pp_lepen.png" width="70px"/>
+								<input type="radio" name="prez" value="lepen" id="1"></label>
+								<label for="2"><img src="./src/filter/pp_melenchon.png" width="70px"/>
+								<input type="radio" name="prez" value="melenchon" id="2"></label>
+								<label for="3"><img src="./src/filter/pp_macron.png" width="70px"/>
+								<input type="radio" name="prez" value="macron" id="3"></label>
+								<label for="4"><img src="./src/filter/pp_trump.jpg" width="70px"/>
+								<input type="radio" name="prez" value="trump" id="4"></label>
+								<label for="5"><img src="./src/filter/pp_bernie.jpg" width="70px"/>
+								<input type="radio" name="prez" value="bernie" id="5"></label>
+								<label for="6"><img src="./src/filter/pp_hilary.jpg" width="70px"/>
+								<input type="radio" name="prez" value="hilary" id="6"></label>
+							</span>
 						</form>
 						<video id="video" width="600px" height="450px">Video stream not available.</video>
+						<input type="submit" form="form1" value="Submit" name="startbutton" id="startbutton" disabled="disabled">
 						<br/>
-					</div>
 					<form method="post" enctype="multipart/form-data" id="form2" action="./upload.php">
 					    Select image to upload:
 					    <input type="file" accept="image/*" name="fileToUpload" id="fileToUpload" disabled="disabled">
 					</form>
 					<canvas id="canvas">
 					</canvas>
-				</div>
 			</div>
 			<div id='side'>
 				<h3>Side Section</h3>
@@ -46,12 +48,16 @@ session_start();
 					<?php include ("./side_section.php") ?>
 				</div>
 			</div>
+		</div>
 			<?php }
 			else {?>
 				<div id='main'>
 					<h3>Main Section</h3>
-					<h4>Log in fucker</h4>
+					<h4>Log in please</h4>
 					<?php }?>
+				</div>
+				<div id='footer'>
+					<h4>Made with 🍻 from Fremont by nsabbah</h4>
 				</div>
 			</body>
 			</html>

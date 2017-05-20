@@ -13,7 +13,14 @@ $login = $_POST['login'];
 $email = $_POST['email'];
 $password = hash("whirlpool", $_POST['passwd']);
 
-$dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+try {
+    $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+    return ;
+}
+
 $sql = "SELECT COUNT(*) FROM USERS WHERE login = :login OR email = :email;";
 $sth = $dbh->prepare($sql);
 $sth->execute(array(':login' => $login, ':email' => $email));

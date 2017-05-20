@@ -114,15 +114,18 @@ function prez_selected() {
             video.mozSrcObject = stream;
           } else {
             var vendorURL = window.URL || window.webkitURL;
-            video.src = vendorURL.createObjectURL(stream);
+            if (video && vendorURL)
+              video.src = vendorURL.createObjectURL(stream);
           }
-          video.play();
+          if (video)
+            video.play();
         },
         function(err) {
           console.log("An error occured! " + err);
         }
       );
 
+      if (video) {
       video.addEventListener('canplay', function(ev){
         if (!streaming) {
           height = video.videoHeight / (video.videoWidth/width);
@@ -140,8 +143,9 @@ function prez_selected() {
           canvas.setAttribute('height', height);
           streaming = true;
         }
-      }, false);
+      }, false);}
 
+      if (startbutton) {
       startbutton.addEventListener('click', function(ev){
         // Check if nothing selected
         if (document.forms["form1"]["prez"].value == "")
@@ -151,15 +155,18 @@ function prez_selected() {
           takepicture();
           uploadpicture();}
           ev.preventDefault();
-        }, false);
+        }, false);}
       }
 
       // If filter selectedm enable click on button
-      document.getElementById('made_selection').addEventListener('click', function(){
-        document.getElementById("startbutton").removeAttribute("disabled");
-        document.getElementById("fileToUpload").removeAttribute("disabled");
+      var made_selection = document.getElementById('made_selection');
+      if (made_selection) {
+        document.getElementById('made_selection').addEventListener('click', function(){
+          document.getElementById("startbutton").removeAttribute("disabled");
+          document.getElementById("fileToUpload").removeAttribute("disabled");
 
-      })
+        })
+    }
 
       function takepicture() {
         var context = canvas.getContext('2d');
@@ -199,6 +206,7 @@ function prez_selected() {
 
 var input = document.getElementsByTagName('input')['fileToUpload'];
 
+if (input) {
 input.onclick = function() {
   this.value = null;
 }
@@ -224,4 +232,4 @@ input.onchange = function(ev) {
   }
   xhr.send(formData);
   ev.preventDefault();
-}
+}}

@@ -12,7 +12,13 @@ $login = $_SESSION['loggued_on_user'];
 $img_name = $_POST['img_name'];
 
 // Connect to database
-$dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+try {
+    $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+    return ;
+}
 
 // Check if user already liked image
 $sql = "SELECT COUNT(*) FROM Likes

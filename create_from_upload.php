@@ -82,7 +82,13 @@ imagedestroy($im2);
 unlink($tmp_png_img);
 
 // Adding the photo path in the photos table
-$dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+try {
+    $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+    return ;
+}
 $sql = "INSERT INTO Photos (user_login, img_name) VALUES (:user_login, :photo_path);";
 $sth = $dbh->prepare($sql);
 $sth->execute(array(':user_login' => $login, ':photo_path' => $img_name));

@@ -4,7 +4,13 @@ require_once "./reset_passwd_msg.php";
 
 $email = $_POST['email'];
 
-$dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+try {
+    $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+    return ;
+}
 $sql = "SELECT COUNT(*) FROM USERS WHERE email = :email;";
 $sth = $dbh->prepare($sql);
 $sth->execute(array(':email' => $email));
