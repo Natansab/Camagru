@@ -10,7 +10,10 @@ require_once "../config/database.php";
 
 $email = $_POST['email'];
 $key = $_POST['key'];
-$password = hash("whirlpool", $_POST['passwd']);
+$password = hash("whirlpool", $_POST['password']);
+// echo $_POST['password'] . "<br />";
+// echo $password . "<br />";
+// $password = "HELLO";
 
 // echo $email . "<br/>";
 // echo $key . "<br/>";
@@ -30,8 +33,7 @@ $sth->execute(array(':key' => $key, ':email' => $email));
 
 if (!strcmp($sth->fetchColumn(),'0'))
 		{
-			echo "Error fucker\n";
-			// echo "<br  /><a href=\"./login_index_pdo.php\">Retour</a>";
+			echo "Error\n";
 		}
 
 else {
@@ -39,8 +41,9 @@ else {
 	echo "<br/>";
 	echo '<a href="./login_index_pdo.php">Back to home</a>';
 
-	$sql = "UPDATE INTO Users (password) VALUES (:password);";
+	$sql = "UPDATE Users SET password = :password
+          WHERE email = :email;";
 	$sth = $dbh->prepare($sql);
-	$sth->execute(array(':password' => $password));
+	$sth->execute(array(':password' => $password, ':email' => $email));
 }
 ?>
